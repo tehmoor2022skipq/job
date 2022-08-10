@@ -1,192 +1,67 @@
 import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { useQuery } from "@apollo/client";
+import { useEffect, useState } from 'react';
+import { ALL_JOBS } from '../graphQL/queries';
 
 function AllJobs() {
+    const { loading, error, data } = useQuery(ALL_JOBS);
+    const [jobs, setJobs] = useState([])
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    useEffect(() => {
+        if (data)
+            setJobs([...data.jobs])
+    }, [data]);
+    if (loading)
+        return <p>Loading ...</p>
+    if (error)
+        return <p>Error</p>
+
     return (
         <Container>
             <h1>AllJobs</h1>
+            {console.log(data['jobs'])}
+
             <Row>
-                <Col md={4}>
-
+                {data['jobs'].map(job =>
+                (<Col md={4}>
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4}>
+                            <Card.Title>{job.title}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">{job.company.name}</Card.Subtitle>
+                            <Card.Link href={job.applyUrl}>Apply here</Card.Link>
+                            <Card.Text>Posted By : {job.userEmail}</Card.Text>
+                            <Card.Text>{job.description.slice(0, 85) + ' ...'}</Card.Text>
+                            <Card.Text style={{ textDecoration: 'underline', color: 'blue' }} onClick={handleShow}>Click here to see full description</Card.Text>
+                            <Modal
+                                show={show}
+                                onHide={handleClose}
+                                backdrop="static"
+                                keyboard={false}
+                                size="sm"
+                                scrollable={true}
+                            >
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Job description</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>{job.description}</Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={handleClose}>
+                                        Close
+                                    </Button>
 
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4}>
+                                </Modal.Footer>
+                            </Modal>
 
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
                         </Card.Body>
                     </Card>
-                </Col>
-                <Col md={4} className="mt-3">
+                </Col>))}
 
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4} className="mt-3">
-
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4} className="mt-3">
-
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4} className="mt-3">
-
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4} className="mt-3">
-
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4} className="mt-3">
-
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4} className="mt-3">
-
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4} className="mt-3">
-
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={4} className="mt-3">
-
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>Job Title</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Company Name</Card.Subtitle>
-                            <Card.Link href="#">email@abc.com</Card.Link>
-                            <Card.Link href="#">Apply here</Card.Link>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
 
             </Row>
 
