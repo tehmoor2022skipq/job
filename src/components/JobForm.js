@@ -12,6 +12,7 @@ import { useMutation } from '@apollo/client';
 function JobForm({ obj }) {
 
     const [title, setTitle] = useState('');
+    const [location, setLocation] = useState('');
     const [userEmail, setuserEmail] = useState('');
     const [description, setDescription] = useState('');
     const [applyUrl, setApplyUrl] = useState('');
@@ -25,6 +26,7 @@ function JobForm({ obj }) {
                 commitmentId: "cjtu8esth000z0824x00wtp1i",
                 companyName: 'Trimulabs',
                 title,
+                locationNames: location,
                 userEmail,
                 description,
                 applyUrl
@@ -39,6 +41,7 @@ function JobForm({ obj }) {
         if (error)
             console.log("Error: ", error);
 
+        setFormVisible(false)
 
     }
     return (
@@ -71,6 +74,10 @@ function JobForm({ obj }) {
                                     <Form.Label>Job Title</Form.Label>
                                     <Form.Control onChange={(e) => setTitle(e.target.value)} type="text" placeholder="ReactJS Developer/ Fullstack developer etc" />
                                 </Form.Group>
+                                <Form.Group className="mb-3" controlId="jobLocation">
+                                    <Form.Label>Location Name</Form.Label>
+                                    <Form.Control onChange={(e) => setLocation(e.target.value)} type="text" placeholder="LA/Californai/NYC" />
+                                </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="email">
                                     <Form.Label>User Email</Form.Label>
@@ -91,7 +98,6 @@ function JobForm({ obj }) {
                             <Button variant="primary"
                                 onClick={() => {
                                     postNewJob()
-                                    setFormVisible(false)
                                 }}>
                                 Submit
                             </Button>

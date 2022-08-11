@@ -2,9 +2,10 @@ import { gql } from '@apollo/client';
 
 export const CREATE_JOB = gql`
     mutation postJob(
-        $commitmentId: String!,
+        $commitmentId: ID!,
         $companyName: String!,
         $title: String!,
+        $locationNames:String!
         $userEmail: String!,
         $description: String!,
         $applyUrl: String!
@@ -14,10 +15,12 @@ export const CREATE_JOB = gql`
                 commitmentId: $commitmentId,
                 companyName: $companyName,
                 title: $title,
+                locationNames:$locationNames,
                 userEmail: $userEmail,
                 description: $description,
                 applyUrl: $applyUrl
             }){ 
+            id,
             title
         }
     }

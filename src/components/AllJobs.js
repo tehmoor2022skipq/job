@@ -31,7 +31,7 @@ function AllJobs() {
 
             <Row>
                 {data['jobs'].map(job =>
-                (<Col md={4}>
+                (<Col key={job.id + job.title + job.company.name} md={4}>
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
                             <Card.Title>{job.title}</Card.Title>
