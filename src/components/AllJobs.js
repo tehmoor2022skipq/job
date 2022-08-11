@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from 'react';
 import { ALL_JOBS } from '../graphQL/queries';
-
+import TopBar from './TopBar'
 function AllJobs() {
     const { loading, error, data } = useQuery(ALL_JOBS);
     const [jobs, setJobs] = useState([])
@@ -24,8 +24,10 @@ function AllJobs() {
 
     return (
         <Container>
-            <h1>AllJobs</h1>
-            {console.log(data['jobs'])}
+            <div className='mb-3 '>
+                <TopBar />
+            </div>
+            {console.log(data['jobs'].length)}
 
             <Row>
                 {data['jobs'].map(job =>
@@ -51,6 +53,7 @@ function AllJobs() {
                                 </Modal.Header>
                                 <Modal.Body>{job.description}</Modal.Body>
                                 <Modal.Footer>
+
                                     <Button variant="secondary" onClick={handleClose}>
                                         Close
                                     </Button>

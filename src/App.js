@@ -15,9 +15,10 @@ const client = new ApolloClient({
 function App() {
   return (
     <div>
-      {/* <JobForm /> */}
+
       <ApolloProvider client={client}>
         <AllJobs />
+        {/* <JobForm /> */}
       </ApolloProvider>
 
     </div>
