@@ -47,11 +47,11 @@ function JobForm({ obj }) {
             });
         }
 
-        if (loading) {
-            console.log(loading)
-        }
         if (error)
-            console.log("Error: ", error);
+            swal({
+                title: `Error while posting new job`,
+                icon: "error",
+            });;
 
         setFormVisible(false)
 
