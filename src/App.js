@@ -1,6 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import JobContext from './context/JobContext';
 import AllJobs from './components/AllJobs';
+import { useState } from 'react';
 import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
 
 const client = new ApolloClient({
@@ -12,11 +14,14 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [jobs, setJobs] = useState([]);
   return (
     <div>
 
       <ApolloProvider client={client}>
-        <AllJobs />
+        <JobContext.Provider value={{ jobs, setJobs }}>
+          <AllJobs />
+        </JobContext.Provider>
       </ApolloProvider>
 
     </div>

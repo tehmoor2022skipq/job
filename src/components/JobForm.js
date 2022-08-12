@@ -6,9 +6,10 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 import { CREATE_JOB } from '../graphQL/mutation';
 import { useMutation } from '@apollo/client';
-
+import { useContextApi } from '../context/JobContext';
 function JobForm({ obj }) {
 
     const [title, setTitle] = useState('');
@@ -16,6 +17,7 @@ function JobForm({ obj }) {
     const [userEmail, setuserEmail] = useState('');
     const [description, setDescription] = useState('');
     const [applyUrl, setApplyUrl] = useState('');
+    const { jobs, setJobs } = useContextApi();
 
     const [postJob, { data, loading, error }] = useMutation(CREATE_JOB);
     const { formVisible, setFormVisible } = obj;
@@ -33,7 +35,14 @@ function JobForm({ obj }) {
             }
         });
         if (res) {
-            console.log(res.data.postJob.title)
+            setJobs([{
+                commitmentId: "cjtu8esth000z0824x00wtp1i",
+                company: { name: 'Trimulabs' }, title, locationNames: location,
+                userEmail, description, applyUrl
+            }, ...jobs]);
+            <Alert variant='success'>
+                Job Posted successfully
+            </Alert>
         }
         if (loading) {
             console.log(loading)
@@ -101,7 +110,9 @@ function JobForm({ obj }) {
                                 }}>
                                 Submit
                             </Button>
-                            <Button variant="secondary" onClick={() => setFormVisible(false)}>
+                            <Button variant="secondary" onClick={() =>
+                                setFormVisible(false)
+                            }>
                                 Close
                             </Button>
                         </Modal.Footer>

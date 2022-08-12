@@ -13,7 +13,7 @@ function TopBar() {
                 <Container>
                     <Navbar.Brand href="#">Job Portal</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#" onClick={() => setFormVisible(true)}>Post Job</Nav.Link>
+                        <Nav.Link className='fs-5 fw-bold text-light' href="#" onClick={() => setFormVisible(true)}><u>Click Here to Post New Job</u></Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
