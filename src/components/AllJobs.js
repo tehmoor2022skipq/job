@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
