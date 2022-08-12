@@ -10,6 +10,7 @@ import Alert from 'react-bootstrap/Alert';
 import { CREATE_JOB } from '../graphQL/mutation';
 import { useMutation } from '@apollo/client';
 import { useContextApi } from '../context/JobContext';
+import swal from '@sweetalert/with-react'
 function JobForm({ obj }) {
 
     const [title, setTitle] = useState('');
@@ -40,10 +41,12 @@ function JobForm({ obj }) {
                 company: { name: 'Trimulabs' }, title, locationNames: location,
                 userEmail, description, applyUrl
             }, ...jobs]);
-            <Alert variant='success'>
-                Job Posted successfully
-            </Alert>
+            swal({
+                title: `Job ${res.data.postJob.title} Successfully Posted`,
+                icon: "success",
+            });
         }
+
         if (loading) {
             console.log(loading)
         }
